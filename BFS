@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+int n;
+cin>>n;
+vector<int> graph[n+1];
+bool visit[n+1]={false};
+
+int e,a,b,c;
+cin>>e;
+for(int i=0;i<e;i++)
+{
+    cin>>a>>b;
+    graph[a].push_back(b);
+    graph[b].push_back(a);
+    
+}
+
+cin>>c;
+queue<int> q;
+q.push(c);
+
+while(!q.empty())
+{
+    int cur=q.front();
+    if(visit[cur]==0)
+    {
+    cout<<cur<<" ";
+    visit[cur]=1;
+    for(int i=0;i<graph[cur].size();i++)
+    {
+        q.push(graph[cur][i]);
+        
+    }
+    }
+    q.pop();
+}
+}
