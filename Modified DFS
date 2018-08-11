@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+int strt[100001];
+int endd[100001];
+int par[100001]; 
+bool vis[100001];
+vector<int> v[100001];
+vector<int> discover;
+int times=-1;
+
+void dfs(int node)
+{
+    vis[node]=true;
+    discover.push_back(node);
+    times++;
+    strt[node]=times;
+    
+    for(int i=0;i<v[node].size();i++)
+    {
+        int cur=v[node][i];
+        if(!vis[cur])
+        {
+            vis[cur]=true;
+            par[cur]=node;
+            dfs(cur);
+        }
+    }
+    endd[node]=times;
+}
+int main() {
+	
+	int n,x,y;
+	cin>>n;
+	for(int i=0;i<n-1;i++)
+	{
+	    cin>>x>>y;
+	    v[x].push_back(y);
+	    v[y].push_back(x);
+	}
+	par[1]=-1;
+	dfs(1);
+	
+	
+}
