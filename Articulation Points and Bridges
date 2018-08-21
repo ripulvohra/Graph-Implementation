@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+int low[100001];
+bool vis[100001];
+int dis[100001];
+int par[100001];
+vector<int> v[100001];
+vector<pair<int,int> > bridg;
+bool ap[100001];
+int timee=-1;
+int dfs(int cur)
+{
+    timee++;
+ dis[cur]=timee;
+ low[cur]=timee;
+ vis[cur]=true;
+ 
+
+ for(int i=0;i<v[cur].size();i++)
+ {
+    
+     int chld= v[cur][i];
+      
+     if(!vis[chld])
+     {
+         par[chld]=cur;
+         dfs(chld);
+         low[cur]=min(low[cur],low[chld]);
+         if(par[cur]==-1&&v[cur].size()>1) {ap[cur]=true;}
+         else if((par[cur]!=-1)&&(low[chld]>=dis[cur])){ ap[cur]=true;}
+         if(low[chld]>dis[cur]) {bridg.push_back(make_pair(cur,chld));}
+         
+     }
+     else if(chld!=par[cur])
+     {
+         low[cur]=min(low[cur],dis[chld]);
+     }
+ }
+ 
+}
+int main() {
+    
+    v[0].push_back(5);
+    v[5].push_back(0);
+    v[0].push_back(1);
+v[1].push_back(0); 
+v[1].push_back(2); 
+v[2].push_back(1);
+v[2].push_back(3);v[3].push_back(2);
+v[1].push_back(3); v[3].push_back(1);
+v[2].push_back(4);v[4].push_back(2);
+v[3].push_back(4);v[4].push_back(3);
+par[0]=-1;
+dfs(0);
+cout<<"Articulation Points : ";
+for(int i=0;i<6;i++)
+{
+    if(ap[i]) cout<<i<<",";
+}
+cout<<endl;
+cout<<"Bridges:\n";
+for(int i=0;i<bridg.size();i++) cout<<bridg[i].first<<"->"<<bridg[i].second<<endl;
+	
+}
+
